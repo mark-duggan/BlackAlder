@@ -2,14 +2,6 @@
 # DATA
 ##################################################################################
 
-data "aws_ssm_parameter" "linux-ami" {
-  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
-}
-
-data "aws_ssm_parameter" "windows-ami" {
-  name = "/aws/service/ami-windows-latest/Windows_Server-2022-English-Full-Base"
-}
-
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -22,7 +14,7 @@ data "aws_availability_zones" "available" {
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = var.enable_dns_hostnames
-  tags                 = local.common_tags
+  tags                 = merge(local.common_tags, {Name="BlackAlder_VPC"})
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -36,7 +28,7 @@ resource "aws_subnet" "subnet1" {
   vpc_id                  = aws_vpc.vpc.id
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[0]
-  tags                    = local.common_tags
+  tags                    = merge(local.common_tags, {Name="BlackAlder_Subnet_1"})
 }
 
 resource "aws_subnet" "subnet2" {
@@ -44,7 +36,7 @@ resource "aws_subnet" "subnet2" {
   vpc_id                  = aws_vpc.vpc.id
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[1]
-  tags                    = local.common_tags
+  tags                    = merge(local.common_tags, {Name="BlackAlder_Subnet_2"})
 }
 
 # ROUTING #
@@ -69,55 +61,3 @@ resource "aws_route_table_association" "rta-subnet2" {
 }
 
 
-# SECURITY GROUPS #
-# Nginx security group 
-resource "aws_security_group" "nginx-sg" {
-  name   = "nginx_sg"
-  vpc_id = aws_vpc.vpc.id
-  tags   = local.common_tags
-
-  # HTTP access from anywhere
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.sg_ingress]
-  }
-
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "alb_sg" {
-  name   = "nginx_alb_sg"
-  vpc_id = aws_vpc.vpc.id
-  tags   = local.common_tags
-
-  # HTTP access from anywhere
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [var.sg_ingress]
-  }
-
-  # outbound internet access
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
