@@ -1,0 +1,9 @@
+---
+- name: Ping Hosts
+  vars:
+    ansible_user: administrator
+  hosts: all
+
+  tasks:
+      - name: Ansible Ping Hosts
+        win_ping:

@@ -1,0 +1,11 @@
+all:
+    hosts:
+        10.10.0.97:
+            ansible_user: ubuntu
+        10.10.10.152:
+            ansible_user: ubuntu
+        10.10.20.35:
+            ansible_user: administrator
+            ansible_connection: winrm
+            ansible_winrm_scheme: http
+            ansible_password: 'gKo586XvDIj-kHk9TJ@Ec2AXW@9VlAK%'

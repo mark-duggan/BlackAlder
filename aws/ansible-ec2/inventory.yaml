@@ -1,0 +1,7 @@
+all:
+    hosts:
+        10.10.20.35:
+            ansible_user: administrator
+            ansible_password: 'gKo586XvDIj-kHk9TJ@Ec2AXW@9VlAK%'
+            ansible_winrm_scheme: http
+            ansible_connection: winrm 

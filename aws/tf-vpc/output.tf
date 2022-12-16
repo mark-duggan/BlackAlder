@@ -1,3 +1,11 @@
+output "bastion_public_ip" {
+  value = aws_instance.bastion.public_ip
+}
+
+output "bastion_private_ip" {
+  value = aws_instance.bastion.private_ip
+}
+
 output "ubuntu_public_ip" {
   value = aws_instance.ubu1.public_ip
 }

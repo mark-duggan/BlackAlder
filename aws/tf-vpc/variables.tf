@@ -25,7 +25,7 @@ variable "enable_dns_hostnames" {
 variable "vpc_subnets_cidr_blocks" {
   type        = list(string)
   description = "CIDR for Subnets in VPC"
-  default     = ["10.10.0.0/24", "10.10.1.0/24"]
+  default     = ["10.10.0.0/24", "10.10.10.0/24","10.10.20.0/24"]
 }
 
 variable "route_table" {
@@ -44,6 +44,12 @@ variable "ec2_instance" {
   type        = string
   description = "EC2 Instance Types"
   default     = "t2.micro"
+}
+
+variable "win_ec2_instance" {
+  type        = string
+  description = "EC2 Instance Types"
+  default     = "t3.small"
 }
 
 variable "company" {
