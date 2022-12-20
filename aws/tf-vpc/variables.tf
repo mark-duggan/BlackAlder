@@ -37,13 +37,19 @@ variable "route_table" {
 variable "sg_ingress" {
   type        = string
   description = "Ingress Locations"
-  default     = "37.228.248.216/32"
+  default     = "163.116.165.115/32"
 }
 
 variable "ec2_instance" {
   type        = string
   description = "EC2 Instance Types"
   default     = "t2.micro"
+}
+
+variable "group" {
+   type       = string
+   description = "Group for Ansible Dynamic Inventory"
+   default     = "nginx"
 }
 
 variable "win_ec2_instance" {
