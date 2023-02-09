@@ -47,9 +47,9 @@ variable "ec2_instance" {
 }
 
 variable "group" {
-   type       = string
-   description = "Group for Ansible Dynamic Inventory"
-   default     = "nginx"
+  type       = string
+  description = "Group for Ansible Dynamic Inventory"
+  default     = "nginx"
 }
 
 variable "win_ec2_instance" {
