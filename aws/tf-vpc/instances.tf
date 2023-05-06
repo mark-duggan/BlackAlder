@@ -64,3 +64,36 @@ echo Starting User Data $(date +"%Y-%m-%dT%H:%M:%S%z")
 EOF
 
 }
+
+resource "aws_ebs_volume" "win_data_1" {
+  availability_zone = "us-east-1c"
+  size = 5
+}
+
+resource "aws_ebs_volume" "win_data_2" {
+  availability_zone = "us-east-1c"
+  size = 7
+}
+
+resource "aws_ebs_volume" "win_data_3" {
+  availability_zone = "us-east-1c"
+  size = 10
+}
+
+resource "aws_volume_attachment" "win_data_1_att" {
+  device_name = "/dev/sdb"
+  volume_id = aws_ebs_volume.win_data_1.id
+  instance_id = aws_instance.win1.id
+}
+
+resource "aws_volume_attachment" "win_data_2_att" {
+  device_name = "/dev/sdc"
+  volume_id = aws_ebs_volume.win_data_2.id
+  instance_id = aws_instance.win1.id
+}
+
+resource "aws_volume_attachment" "win_data_3_att" {
+  device_name = "/dev/sdd"
+  volume_id = aws_ebs_volume.win_data_3.id
+  instance_id = aws_instance.win1.id
+}
