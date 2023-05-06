@@ -37,7 +37,7 @@ variable "route_table" {
 variable "sg_ingress" {
   type        = string
   description = "Ingress Locations"
-  default     = "163.116.165.115/32"
+  default     = "37.228.249.190/32"
 }
 
 variable "ec2_instance" {
